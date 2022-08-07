@@ -25,7 +25,7 @@ export default function ScreenFirst() {
   if (!loaded) {
     return null;
   }
-
+ 
   return (
 
     <ImageBackground source={imgBg} resizeMode="cover" style={styles.BackImg}>

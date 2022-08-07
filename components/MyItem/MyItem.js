@@ -18,6 +18,10 @@ import {
 } from "react-native";
 
 export default function MyItem() {
+
+
+
+  
   const [loaded] = useFonts({
     Montserrat: require("../../assets/font/Montserrat-VariableFont_wght.ttf"),
     Brolink: require("../../assets/font/Brolink-Outline.ttf"),
