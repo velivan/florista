@@ -11,8 +11,10 @@ import {
 } from "react-native";
 import { useFonts } from "expo-font";
 import imgBg from "../../assets/img/bg.jpg";
+import { NativeRouter, Route, Link } from "react-router-native";
 
 export default function ScreenFirst() {
+  
   const [loaded] = useFonts({
     Montserrat: require("../../assets/font/Montserrat-VariableFont_wght.ttf"),
     Brolink: require("../../assets/font/Brolink-Outline.ttf"),
@@ -24,10 +26,10 @@ export default function ScreenFirst() {
     return null;
   }
 
-
   return (
+
     <ImageBackground source={imgBg} resizeMode="cover" style={styles.BackImg}>
-    <StatusBar style="light" />
+      <StatusBar style="light" />
       <View style={styles.container}>
         <View style={styles.containerTop}>
           <Text style={styles.textTitle}>Florista</Text>
@@ -41,9 +43,9 @@ export default function ScreenFirst() {
             <Text>Hello</Text>
 
             <Animated.View style={styles.animBtn}>
-              <Pressable style={styles.button} onPress={addafter}>
+              <Link to="/main" style={styles.button}>
                 <Text style={styles.textBtn}>Hello</Text>
-              </Pressable>
+              </Link>
             </Animated.View>
           </View>
         </Animated.View>
@@ -56,11 +58,8 @@ const colorLight = "rgb(239, 250, 233)";
 const colorStrong = "rgb(62, 82, 65)";
 const colorMidle = "rgb(166, 182, 158)";
 
-function addafter(){
-
-  return (
-    console.log("add after" )
-  )
+function addafter() {
+  return console.log("add after");
 }
 
 const FadeUpFast = new Animated.Value(100);

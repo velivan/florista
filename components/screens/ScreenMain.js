@@ -1,10 +1,11 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MyStyle from "../MyStyle";
 import { MyFont } from "../MyStyle";
 import axios, { Axios } from "axios";
 import { useFonts } from "expo-font";
+import { NativeRouter, Route, Link } from "react-router-native";
 import {
   ActivityIndicator,
   StyleSheet,
@@ -16,31 +17,25 @@ import {
   ScrollView,
 } from "react-native";
 import MyItem from "../MyItem/MyItem";
-import ExplorItem from "../MyItem/ExplorItem";
+import Explor from "../MyItem/ExplorItem";
+import itemsApi from "../../assets/api.json";
 
 export default function ScreenMain() {
-  // const [post, setPost] = React.useState(null);
 
-  // React.useEffect(() => {
-  //   axios.get('https://62ef541df5521ecad58104ec.mockapi.io/Flowers')
-  //   .then((response) => {
-  //     setPost(response.data);
-  //   });
-  // }, []);
+  // const [posts, setPosts] = useState([]);
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const res = await fetch(
+  //       "https://62ef541df5521ecad58104ec.mockapi.io/Flowers"
+  //     );
+  //     const json = await res.json();
 
-  // if (!post) return null;
-  // console.log(post)
+      
+  //     setPosts(json);
+  //   }
 
-  const [items, setItems] = React.useState();
-  React.useEffect(() => {
-    axios
-      .get("https://62ef541df5521ecad58104ec.mockapi.io/Flowers")
-      .then(({ data }) => {
-        setItems(data);
-        return data;
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  //   fetchData();
+  // });
 
   const [loaded] = useFonts({
     Montserrat: require("../../assets/font/Montserrat-VariableFont_wght.ttf"),
@@ -57,19 +52,17 @@ export default function ScreenMain() {
     return null;
   }
 
-  // {post.map((p)=>{
-  //   return (<ExplorItem
-  //   imgItem={p.img}
-  //   itemName={p.name}
-  //   itemtext={p.text}
-  //   />)
-  // })}
+
   return (
     <View style={styles.container}>
       <View style={styles.menu}>
         <StatusBar style="light" />
-        <Ionicons name="md-leaf" size={38} color={MyStyle.color.colorLight} />
-        <Text style={styles.textLogo}>Florista</Text>
+        <Link to="/">
+          <Ionicons name="md-leaf" size={38} color={MyStyle.color.colorLight} />
+        </Link>
+        <Link to="/">
+          <Text style={styles.textLogo}>Florista</Text>
+        </Link>
 
         <Ionicons name="md-menu" size={38} color={MyStyle.color.colorLight} />
       </View>
@@ -88,13 +81,7 @@ export default function ScreenMain() {
         <View style={styles.explor}>
           <Text style={styles.textTitle}>Explor</Text>
           <ScrollView>
-          {items.map((e) => {
-            return (
-              <View>
-              <ExplorItem id={e.id} iImg={e.img} iName={e.name} iText={e.text} />
-              </View>
-            );
-          })}
+          <Explor />
           </ScrollView>
         </View>
       </View>

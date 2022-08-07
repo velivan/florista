@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { StatusBar } from "expo-status-bar";
+import { useEffect, useState } from "react";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import MyStyle from "../MyStyle";
 import { MyFont } from "../MyStyle";
 
@@ -13,7 +15,11 @@ import {
   Easing,
 } from "react-native";
 
-export default ExplorItem = () => {
+export default function ExplorItem(props) {
+  function shoter(text) {
+    return text.slice(0, 80) + " ->";
+  }
+
   const [loaded] = useFonts({
     Montserrat: require("../../assets/font/Montserrat-VariableFont_wght.ttf"),
     Brolink: require("../../assets/font/Brolink-Outline.ttf"),
@@ -24,48 +30,21 @@ export default ExplorItem = () => {
     RobotoRegular: require("../../assets/font/Roboto-Regular.ttf"),
     RobotoThin: require("../../assets/font/Roboto-Thin.ttf"),
   });
-
-
-  const [isLoading, setLoading] = useState(true);
-  const [data, setData] = useState([]);
-
-  const getPost = async () => {
-     try {
-      const response = await fetch('https://62ef541df5521ecad58104ec.mockapi.io/Flowers');
-      const json = await response.json();
-      setData(json);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  useEffect(() => {
-    getPost();
-  }, []);
-
   return (
-    
-    <View style={{ flex: 1, padding: 24 }}>
-    {isLoading ? <ActivityIndicator/> : (
-      <View>
-         {data.map(i => {
-          {console.log(i.name)}
+
+        <View>
+          {console.log(props.itemsApi.id)}
           <Animated.View style={styles.explorItem}>
-            <Image source={{ uri: i.img }} style={styles.itemImg} />
+            <Image source={{ uri: props.itemsApi.img }} style={styles.itemImg} />
             <View>
-              <Text style={styles.explorItemTitle}>{i.name}</Text>
-              <Text style={styles.explorItemText}>{i.text}</Text>
+              <Text style={styles.explorItemTitle}>{props.itemsApi.name}</Text>
+              <Text style={styles.explorItemText}>{props.itemsApi.text}</Text>
             </View>
           </Animated.View>
-         })
-        }
         </View>
-    )}
-  </View>
+    
   );
-};
+}
 
 const FadeOpacity = new Animated.Value(0);
 Animated.spring(FadeOpacity, {
