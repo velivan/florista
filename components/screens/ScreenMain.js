@@ -58,7 +58,6 @@ export default function ScreenMain() {
         <Text style={styles.textTitle}>Мої рослини</Text>
         <View style={styles.MyItems}>
           <ScrollView horizontal={true}>
-          
             <MyItem />
             <MyItem />
             <MyItem />
