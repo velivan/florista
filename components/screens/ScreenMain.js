@@ -19,16 +19,28 @@ import MyItem from "../MyItem/MyItem";
 import ExplorItem from "../MyItem/ExplorItem";
 
 export default function ScreenMain() {
+  // const [post, setPost] = React.useState(null);
+
+  // React.useEffect(() => {
+  //   axios.get('https://62ef541df5521ecad58104ec.mockapi.io/Flowers')
+  //   .then((response) => {
+  //     setPost(response.data);
+  //   });
+  // }, []);
+
+  // if (!post) return null;
+  // console.log(post)
 
   const [items, setItems] = React.useState();
-  React.useEffect(() =>{
-    axios.get('https://62ef541df5521ecad58104ec.mockapi.io/Flowers')
-    .then(({data}) => {
-      setItems(data);
-      
-    }).catch(err => console.log(err));
-  },[])
-  console.log(items)
+  React.useEffect(() => {
+    axios
+      .get("https://62ef541df5521ecad58104ec.mockapi.io/Flowers")
+      .then(({ data }) => {
+        setItems(data);
+        return data;
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   const [loaded] = useFonts({
     Montserrat: require("../../assets/font/Montserrat-VariableFont_wght.ttf"),
@@ -44,7 +56,14 @@ export default function ScreenMain() {
   if (!loaded) {
     return null;
   }
- 
+
+  // {post.map((p)=>{
+  //   return (<ExplorItem
+  //   imgItem={p.img}
+  //   itemName={p.name}
+  //   itemtext={p.text}
+  //   />)
+  // })}
   return (
     <View style={styles.container}>
       <View style={styles.menu}>
@@ -69,14 +88,13 @@ export default function ScreenMain() {
         <View style={styles.explor}>
           <Text style={styles.textTitle}>Explor</Text>
           <ScrollView>
-          {items.map((obj) => (
-            <ExplorItem 
-            itemImg = {obj.img}
-            itemName = {obj.name}
-            itemText = {obj.text}
-            />
-          ))}
-            <ExplorItem />
+          {items.map((e) => {
+            return (
+              <View>
+              <ExplorItem id={e.id} iImg={e.img} iName={e.name} iText={e.text} />
+              </View>
+            );
+          })}
           </ScrollView>
         </View>
       </View>

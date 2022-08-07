@@ -15,9 +15,9 @@ import {
   Easing,
 } from "react-native";
 
-export default function ExplorItem() {
+export default function ExplorItem(props) {
   function shoter(text) {
-    return text.slice(0, 120) + "...";
+    return text.slice(0, 80) + " ->";
   }
 
   const [loaded] = useFonts({
@@ -30,17 +30,13 @@ export default function ExplorItem() {
     RobotoRegular: require("../../assets/font/Roboto-Regular.ttf"),
     RobotoThin: require("../../assets/font/Roboto-Thin.ttf"),
   });
-
   return (
     <Animated.View style={styles.explorItem}>
-      <Image
-        style={styles.itemImg}
-        source={{
-          uri: { itemImg },
-        }}
-      />
-      <Text style={styles.explorItemTitle}>{ itemName }</Text>
-      <Text style={styles.explorItemText}>{shoter({ itemText })}...</Text>
+      <Image source={{ uri: props.iImg }} style={styles.itemImg} />
+      <View>
+        <Text style={styles.explorItemTitle}>{props.iName}</Text>
+        <Text style={styles.explorItemText}>{shoter(props.iText)}</Text>
+      </View>
     </Animated.View>
   );
 }
@@ -62,14 +58,14 @@ Animated.spring(FadeLeft, {
 
 const styles = StyleSheet.create({
   explorItem: {
+    flexDirection: "row",
     backgroundColor: "white",
     marginVertical: 10,
     width: "90%",
-    padding: 10,
+    padding: 0,
     borderRadius: 10,
     shadowRadius: 10,
     shadowOpacity: 0.1,
-    flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "flex-start",
     margin: 20,
@@ -77,7 +73,7 @@ const styles = StyleSheet.create({
     top: FadeLeft,
   },
   explorItemTitle: {
-    fontSize: 18,
+    fontSize: 20,
     fontFamily: "RobotoMedium",
     color: MyStyle.color.colorStrong,
   },
@@ -85,9 +81,15 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: "RobotoRegular",
     color: MyStyle.color.colorStrong,
+    margin: 'auto',
+    maxWidth: '90%',
+  
   },
   itemImg: {
-    width: 40,
-    height: 40,
+    width: 55,
+    height: 55,
+    marginRight: 7,
+    borderBottomLeftRadius:10,
+    borderTopLeftRadius:10,
   },
 });
