@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from "react";
 import MyStyle from "../MyStyle";
 import { MyFont } from "../MyStyle";
 
@@ -11,6 +11,7 @@ import {
   Image,
   Animated,
   Easing,
+  FlatList,
 } from "react-native";
 
 export default ExplorItem = () => {
@@ -26,12 +27,16 @@ export default ExplorItem = () => {
   });
 
 
+
+  
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
 
   const getPost = async () => {
-     try {
-      const response = await fetch('https://62ef541df5521ecad58104ec.mockapi.io/Flowers');
+    try {
+      const response = await fetch(
+        "https://62ef541df5521ecad58104ec.mockapi.io/Flowers"
+      );
       const json = await response.json();
       setData(json);
     } catch (error) {
@@ -39,31 +44,41 @@ export default ExplorItem = () => {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
+ 
+
+  function getContent(){
+    return (
+      <View>
+      {data.map((i) => {
+        <Animated.View style={styles.explorItem}>
+        {console.log(i.id)}
+          <Image source={{ uri: i.img }} style={styles.itemImg} />
+          <View>
+            <Text style={styles.explorItemTitle}>{i.name}</Text>
+            <Text style={styles.explorItemText}>{i.text}</Text>
+          </View>
+        </Animated.View>;
+      })}
+      </View>
+    )
+  }
   useEffect(() => {
     getPost();
+    getContent();
   }, []);
-
   return (
-    
     <View style={{ flex: 1, padding: 24 }}>
-    {isLoading ? <ActivityIndicator/> : (
-      <View>
-         {data.map(i => {
-          {console.log(i.name)}
-          <Animated.View style={styles.explorItem}>
-            <Image source={{ uri: i.img }} style={styles.itemImg} />
-            <View>
-              <Text style={styles.explorItemTitle}>{i.name}</Text>
-              <Text style={styles.explorItemText}>{i.text}</Text>
-            </View>
-          </Animated.View>
-         })
-        }
+      {isLoading ? (
+        <ActivityIndicator />
+      ) : (
+        <View>
+          
+         {getContent()}
         </View>
-    )}
-  </View>
+      )}
+    </View>
   );
 };
 
